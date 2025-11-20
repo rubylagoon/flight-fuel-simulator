@@ -1,7 +1,39 @@
-// Simple demo version of the simulator
+let airports = [];
+let blend = 0;
+
 const app = document.getElementById("app");
 
-let blend = 0;
+async function loadAirports() {
+  const res = await fetch("airports.json");
+  airports = await res.json();
+}
+
+function haversine(lat1, lon1, lat2, lon2) {
+  const R = 6371;
+  const toRad = v => (v * Math.PI) / 180;
+  const dLat = toRad(lat2 - lat1);
+  const dLon = toRad(lon2 - lon1);
+  const a = Math.sin(dLat/2)**2 +
+            Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) *
+            Math.sin(dLon/2)**2;
+  return 2 * R * Math.asin(Math.sqrt(a));
+}
+
+function findNearestAirport(term) {
+  const t = term.toLowerCase();
+  let best = null;
+  let score = Infinity;
+
+  for (const ap of airports) {
+    const text = (ap.city + " " + ap.name + " " + ap.iata).toLowerCase();
+    if (text.includes(t)) {
+      return ap;
+    }
+    // fallback: choose first if no direct match
+    if (score === Infinity) best = ap;
+  }
+  return best;
+}
 
 function showIntro() {
   app.innerHTML = `
@@ -32,16 +64,18 @@ function showDestination() {
   app.innerHTML = `
     <div class="screen">
       <h2>Destination</h2>
-      <input id="dest" placeholder="Type a destination">
+      <input id="dest" placeholder="City or Airport">
       <button onclick="calculate()">Calculate</button>
     </div>
   `;
 }
 
 function calculate() {
-  const dest = document.getElementById("dest").value || "Unknown";
+  const term = document.getElementById("dest").value;
+  const dest = findNearestAirport(term);
+  const origin = airports.find(a => a.iata === "LHR");
 
-  const distance = 1000; // placeholder
+  const distance = haversine(origin.lat, origin.lon, dest.lat, dest.lon);
   const fuelBurn = distance * 3.6;
   const co2Traditional = fuelBurn * 3.16;
   const reductionFactor = 0.8;
@@ -53,7 +87,8 @@ function calculate() {
   app.innerHTML = `
     <div class="screen">
       <h2>Results</h2>
-      <p>Destination: ${dest}</p>
+      <p>Destination: ${dest.city} (${dest.iata})</p>
+      <p>Distance: ${distance.toFixed(0)} km</p>
       <p>Fuel burn: ${fuelBurn.toFixed(0)} kg</p>
       <p>CO₂ (Traditional): ${co2Traditional.toFixed(0)} kg</p>
       <p>CO₂ (Your Fuel): ${co2Bio.toFixed(0)} kg</p>
@@ -63,4 +98,4 @@ function calculate() {
   `;
 }
 
-showIntro();
+loadAirports().then(showIntro);

@@ -1,0 +1,72 @@
+[
+  {
+    "name": "London Heathrow",
+    "city": "London",
+    "iata": "LHR",
+    "lat": 51.4706,
+    "lon": -0.4619
+  },
+  {
+    "name": "Paris Charles de Gaulle",
+    "city": "Paris",
+    "iata": "CDG",
+    "lat": 49.0097,
+    "lon": 2.5479
+  },
+  {
+    "name": "New York JFK",
+    "city": "New York",
+    "iata": "JFK",
+    "lat": 40.6413,
+    "lon": -73.7781
+  },
+  {
+    "name": "Los Angeles Intl",
+    "city": "Los Angeles",
+    "iata": "LAX",
+    "lat": 33.9416,
+    "lon": -118.4085
+  },
+  {
+    "name": "Dubai Intl",
+    "city": "Dubai",
+    "iata": "DXB",
+    "lat": 25.2532,
+    "lon": 55.3657
+  },
+  {
+    "name": "Tokyo Haneda",
+    "city": "Tokyo",
+    "iata": "HND",
+    "lat": 35.5494,
+    "lon": 139.7798
+  },
+  {
+    "name": "Singapore Changi",
+    "city": "Singapore",
+    "iata": "SIN",
+    "lat": 1.3644,
+    "lon": 103.9915
+  },
+  {
+    "name": "Sydney Kingsford Smith",
+    "city": "Sydney",
+    "iata": "SYD",
+    "lat": -33.9399,
+    "lon": 151.1753
+  },
+  {
+    "name": "Toronto Pearson",
+    "city": "Toronto",
+    "iata": "YYZ",
+    "lat": 43.6777,
+    "lon": -79.6248
+  },
+  {
+    "name": "Frankfurt Airport",
+    "city": "Frankfurt",
+    "iata": "FRA",
+    "lat": 50.0379,
+    "lon": 8.5622
+  }
+]
